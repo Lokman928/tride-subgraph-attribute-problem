@@ -51,7 +51,6 @@ export function handleEventBadgeMetadata(content: Bytes): void {
                 ]
             );
         }
-
-        eventBadgeMetadata.save();
     }
+    eventBadgeMetadata.save();
 }

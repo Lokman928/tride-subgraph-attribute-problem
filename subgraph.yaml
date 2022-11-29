@@ -14,12 +14,7 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - ContractAdmin
-        - Organisation
-        - Skill
-        - Event
-        - Badge
-        - User
+        - EventBadgeMetadata
       abis:
         - name: Organisation
           file: ./abis/Organisation.json
