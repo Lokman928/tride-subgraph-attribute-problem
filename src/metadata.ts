@@ -13,22 +13,8 @@ export function handleEventBadgeMetadata(content: Bytes): void {
     const value = json.fromBytes(content).toObject();
 
     if (value) {
-        const image = value.get("image");
-        const name = value.get("name");
-        const description = value.get("description");
         const attribs = value.get("attributes");
 
-        if (image) {
-            eventBadgeMetadata.image = image.toString();
-        }
-
-        if (name) {
-            eventBadgeMetadata.name = name.toString();
-        }
-
-        if (description) {
-            eventBadgeMetadata.description = description.toString();
-        }
         if (attribs) {
             let newAttributes: Array<string> = [];
             let attributesArray = attribs.toArray();

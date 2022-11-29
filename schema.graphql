@@ -15,8 +15,5 @@ type Attribute @entity {
 
 type EventBadgeMetadata @entity {
     id: ID!
-    image: String
     attributes: [Attribute!]
-    name: String
-    description: String
 }
