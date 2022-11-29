@@ -1,0 +1,22 @@
+type ContractAdmin @entity {
+    id: ID!
+    count: BigInt!
+    previousAdmin: Bytes! # address
+    newAdmin: Bytes! # address
+}
+
+# Metadata related:
+type Attribute @entity {
+    id: String!
+    trait_type: String!
+    value: String!
+    from: String!
+}
+
+type EventBadgeMetadata @entity {
+    id: ID!
+    image: String
+    attributes: [Attribute!]
+    name: String
+    description: String
+}

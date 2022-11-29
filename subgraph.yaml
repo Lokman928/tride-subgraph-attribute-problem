@@ -1,0 +1,44 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Organisation
+    network: mumbai
+    source: 
+      address: "0x65fdD921e5d591CFf8d888D68194F7360d5354ae"
+      abi: Organisation
+      startBlock: 28953935
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ContractAdmin
+        - Organisation
+        - Skill
+        - Event
+        - Badge
+        - User
+      abis:
+        - name: Organisation
+          file: ./abis/Organisation.json
+      eventHandlers:
+        - event: Initialized(uint8)
+          handler: handleInitialized
+      file: ./src/organisation.ts
+templates:
+  - name: EventBadgeMetadataTemplate
+    kind: file/ipfs
+    mapping:
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/metadata.ts
+      handler: handleEventBadgeMetadata
+      entities:
+        - EventBadgeMetadata
+        - Attribute
+      abis:
+        - name: EventBadge
+          file: ./abis/EventBadge.json
+    network: mumbai
