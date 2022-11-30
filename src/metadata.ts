@@ -1,15 +1,11 @@
-import { EventBadgeMetadata } from "./../generated/schema";
+import { Attribute, EventBadgeMetaData } from "./../generated/schema";
 import { Bytes, dataSource, json, log } from "@graphprotocol/graph-ts";
 import { getOrCreateAttribute } from "./helper/utils";
 
 export function handleEventBadgeMetadata(content: Bytes): void {
-    log.debug("handleEventBadgeMetadata: {}", [
-        dataSource.address().toString(),
-    ]);
+    log.debug("handleEventBadgeMetadata: {}", [dataSource.stringParam()]);
 
-    let eventBadgeMetadata = new EventBadgeMetadata(
-        dataSource.address().toString()
-    );
+    let eventBadgeMetadata = new EventBadgeMetaData(dataSource.stringParam());
     const value = json.fromBytes(content).toObject();
 
     if (value) {
@@ -32,10 +28,20 @@ export function handleEventBadgeMetadata(content: Bytes): void {
                     .mustGet("value")
                     .toString();
 
-                let attributesId = getOrCreateAttribute(
-                    currentType,
-                    currentValue
-                ).id;
+                const newTypeString = currentType.replace(" ", "_");
+                const newValueString = currentValue.replace(" ", "_");
+                const attributeId = newTypeString + "-" + newValueString;
+
+                let attributeObj = Attribute.load(attributeId);
+
+                if (attributeObj == null) {
+                    attributeObj = new Attribute(attributeId);
+                    attributeObj.trait_type = currentType;
+                    attributeObj.value = currentValue;
+                    attributeObj.save();
+                }
+
+                let attributesId = attributeObj.id;
 
                 newAttributes.push(attributesId);
             }
@@ -45,7 +51,7 @@ export function handleEventBadgeMetadata(content: Bytes): void {
             log.debug(
                 "ipfs: {} | newAttributes: {} | eventBadgeMetadata.attributes: {}",
                 [
-                    dataSource.address().toString(),
+                    dataSource.stringParam(),
                     newAttributes.toString(),
                     eventBadgeMetadata.attributes!.toString(),
                 ]

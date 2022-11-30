@@ -1,5 +1,5 @@
 # Metadata related:
-type EventBadgeMetadata @entity {
+type EventBadgeMetaData @entity {
     id: ID!
     attributes: [Attribute!]
 }
@@ -8,5 +8,4 @@ type Attribute @entity {
     id: String!
     trait_type: String!
     value: String!
-    from: String!
 }

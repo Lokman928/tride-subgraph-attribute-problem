@@ -51,7 +51,6 @@ export function getOrCreateAttribute(type: string, value: string): Attribute {
         attributeObj = new Attribute(attributeId);
         attributeObj.trait_type = type;
         attributeObj.value = value;
-        attributeObj.from = dataSource.address().toString();
         attributeObj.save();
     }
 
